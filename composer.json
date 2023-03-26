@@ -1,0 +1,22 @@
+{
+    "name": "dima/php-blog-project",
+    "description": "Blog on Php",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "Dima\\PhpBlogProject\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Dmitry Iordanov",
+            "email": "Dimanr@i.ua"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "slim/slim": "4.*",
+        "slim/psr7": "^1.6",
+        "twig/twig": "^3.5"
+    }
+}
