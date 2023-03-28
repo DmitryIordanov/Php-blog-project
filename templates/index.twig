@@ -5,54 +5,16 @@
    	<div class="container" style="text-align: center;">
    		<h1 class="mb-5 mt-5">Hello, world!</h1>
    		<div class="row" style="justify-content: center;">
+   			{% for post in posts %}
    			<div class="card mycartstyle" style="width: 18rem;">
 				  <img src="https://dummyimage.com/320x200/0088ff/0011ff" class="card-img-top" alt="...">
 				  <div class="card-body">
-				    <h5 class="card-title">Card title</h5>
-				    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-				    <a href="#" class="btn btn-primary">Go somewhere</a>
+				    <h5 class="card-title">{{ post.title|escape }}</h5>
+				    <p class="card-text">{{ post.description|escape }}</p>
+				    <a href="{{ post.url_key }}" class="btn btn-primary">Learn more</a>
 				  </div>
 				</div>
-				<div class="card mycartstyle" style="width: 18rem;">
-				  <img src="https://dummyimage.com/320x200/0088ff/0011ff" class="card-img-top" alt="...">
-				  <div class="card-body">
-				    <h5 class="card-title">Card title</h5>
-				    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-				    <a href="#" class="btn btn-primary">Go somewhere</a>
-				  </div>
-				</div>
-				<div class="card mycartstyle" style="width: 18rem;">
-				  <img src="https://dummyimage.com/320x200/0088ff/0011ff" class="card-img-top" alt="...">
-				  <div class="card-body">
-				    <h5 class="card-title">Card title</h5>
-				    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-				    <a href="#" class="btn btn-primary">Go somewhere</a>
-				  </div>
-				</div>
-				<div class="card mycartstyle" style="width: 18rem;">
-				  <img src="https://dummyimage.com/320x200/0088ff/0011ff" class="card-img-top" alt="...">
-				  <div class="card-body">
-				    <h5 class="card-title">Card title</h5>
-				    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-				    <a href="#" class="btn btn-primary">Go somewhere</a>
-				  </div>
-				</div>
-				<div class="card mycartstyle" style="width: 18rem;">
-				  <img src="https://dummyimage.com/320x200/0088ff/0011ff" class="card-img-top" alt="...">
-				  <div class="card-body">
-				    <h5 class="card-title">Card title</h5>
-				    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-				    <a href="#" class="btn btn-primary">Go somewhere</a>
-				  </div>
-				</div>
-				<div class="card mycartstyle" style="width: 18rem;">
-				  <img src="https://dummyimage.com/320x200/0088ff/0011ff" class="card-img-top" alt="...">
-				  <div class="card-body">
-				    <h5 class="card-title">Card title</h5>
-				    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-				    <a href="#" class="btn btn-primary">Go somewhere</a>
-				  </div>
-				</div>
+				{% endfor %}
    		</div>
    	</div>
    </div>
