@@ -3,11 +3,11 @@
 {% block body %}
    <div class="main">
    	<div class="container" style="text-align: center;">
-   		<h1 class="mb-5 mt-5">This is my blog</h1>
+   		<h1 class="mb-5 mt-5">Blog</h1>
    		<div class="row" style="justify-content: center; margin-right: 50px; margin-left: 50px;">
    			{% include 'section/posts.twig' with posts %}
+            {% include 'section/pagination.twig' %}
    		</div>
-   		<div class="mb-5 mt-5"><a href="{{ url('blog') }}" class="btn btn-primary">View more</a></div>
    	</div>
    </div>
 

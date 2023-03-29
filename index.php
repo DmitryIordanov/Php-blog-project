@@ -5,6 +5,9 @@ use Slim\Factory\AppFactory;
 use Twig\Loader\FilesystemLoader;
 use Twig\Environment;
 use Blog\PostMapper;
+use Blog\LatestPosts;
+use Blog\Slim\TwigMiddleware;
+
 
 require __DIR__ . '/vendor/autoload.php';
 
@@ -25,12 +28,13 @@ try {
     exit;
 }
 
-$PostMapper = new PostMapper($connection);
-
 $app = AppFactory::create();
 
-$app->get('/', function (Request $request, Response $response, $args) use ($view, $PostMapper) {
-    $posts = $PostMapper->getList('DESC');
+$app->add(new TwigMiddleware($view));
+
+$app->get('/', function (Request $request, Response $response) use ($view, $connection) {
+    $LatestPosts = new LatestPosts($connection);
+    $posts = $LatestPosts->getPostNum(3);
 
     $body = $view->render("index.twig", [
         'posts' => $posts
@@ -39,7 +43,7 @@ $app->get('/', function (Request $request, Response $response, $args) use ($view
     return $response;
 });
 
-$app->get('/about', function (Request $request, Response $response, $args) use ($view) {
+$app->get('/about', function (Request $request, Response $response) use ($view) {
     $body = $view->render("about.twig", [
         'name' => 'Dimon'
     ]);
@@ -47,7 +51,23 @@ $app->get('/about', function (Request $request, Response $response, $args) use (
     return $response;
 });
 
-$app->get('/{url_key}', function (Request $request, Response $response, $args) use ($view, $PostMapper) {
+$app->get('/blog[/{page}]', function (Request $request, Response $response, $args) use ($view, $connection) {
+    $PostMapper = new PostMapper($connection);
+
+    $page = isset($args['page']) ? (int) $args['page'] : 1;
+    $limit = 2;
+
+    $posts = $PostMapper->getList($page, $limit, 'DESC');
+
+    $body = $view->render("blog.twig", [    
+        'posts' => $posts
+    ]);
+    $response->getBody()->write($body);
+    return $response;
+});
+
+$app->get('/{url_key}', function (Request $request, Response $response, $args) use ($view, $connection) {
+    $PostMapper = new PostMapper($connection);
     $post = $PostMapper->getByUrlKey((string) $args['url_key']);
 
     if (empty($post)) {

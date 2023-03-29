@@ -3,7 +3,9 @@
 {% block body %}
 
 <div class="container">
-	<img src="https://dummyimage.com/1200x400/0088ff/0011ff" class="img-fluid" alt="...">
+	{% if post.image_path is not null %}
+	<img src="{{ asset_url(post.image_path) }}" class="img-fluid" alt="...">
+	{% endif %}
 	<h1>{{ post.title|escape }}</h1>
 	<div class="container mb-3">
 		<div class="row">

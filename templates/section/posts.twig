@@ -1,0 +1,12 @@
+{% for post in posts %}
+<div class="card mycartstyle" style="width: 18rem;">
+  	{% if post.image_path is not null %}
+	<img src="{{ asset_url(post.image_path) }}" class="img-fluid" alt="...">
+	{% endif %}
+  <div class="card-body">
+    <h5 class="card-title">{{ post.title|escape }}</h5>
+    <p class="card-text">{{ post.description|escape }}</p>
+    <a href="{{ url(post.url_key) }}" class="btn btn-primary">Learn more</a>
+  </div>
+</div>
+{% endfor %}
