@@ -6,10 +6,21 @@
     <title>Bootstrap demo</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
     <style>
-    	.mycartstyle{
-    		margin-left: 15px;
-    		margin-top: 15px;
-    	}
+      html, body{
+        height: 100%;
+      }
+      .wrapper{
+        min-height: 100%;
+        display: flex;
+        flex-direction: column;
+      }
+      .main{
+        flex: 1 1 auto;
+      }
+      .mycartstyle{
+        margin-left: 15px;
+        margin-top: 15px;
+      }
       .center-element{
         display: flex;
         justify-content: center;
@@ -17,18 +28,17 @@
     </style>
   </head>
   <body>
+    <div class="wrapper">
+      {% include 'section/navigation.twig' %}
 
-  {% include 'section/navigation.twig' %}
+      {% block body %}{% endblock %}
 
-  <div class="container">
-	   {% block body %}{% endblock %}
-  </div>
-
-  <footer class="footer bg-light p-4 mt-4">
-    <div class="container">
-      <span class="text-muted">Ⓒ {{ 'now'|date('Y') }} Iordanov Dmitry</span>
+      <footer class="footer bg-light p-4 mt-4">
+        <div class="container">
+          <span class="text-muted">Ⓒ {{ 'now'|date('Y') }} Iordanov Dmitry</span>
+        </div>
+      </footer>
     </div>
-  </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.min.js" integrity="sha384-heAjqF+bCxXpCWLa6Zhcp4fu20XoNIA98ecBC1YkdXhszjoejr5y9Q77hIrv8R9i" crossorigin="anonymous"></script>

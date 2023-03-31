@@ -59,8 +59,13 @@ $app->get('/blog[/{page}]', function (Request $request, Response $response, $arg
 
     $posts = $PostMapper->getList($page, $limit, 'DESC');
 
+    $totalCount = $PostMapper->getTotalCount();
     $body = $view->render("blog.twig", [    
-        'posts' => $posts
+        'posts' => $posts,
+        'pagination' => [
+            'current' => $page,
+            'paging' => ceil($totalCount / $limit),
+        ]
     ]);
     $response->getBody()->write($body);
     return $response;
