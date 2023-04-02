@@ -1,6 +1,6 @@
 <?php
 
-namespace Blog\Twig;
+namespace Dima\PhpBlogProject\Twig;
 
 use Psr\Http\Message\ServerRequestInterface;
 use Twig\Extension\AbstractExtension;
@@ -26,7 +26,9 @@ class AssetExtension extends AbstractExtension{
 	}
 	public function getBaseUrl(): string{
 		$params = $this->request->getServerParams();
-		return $params['REQUEST_SCHEME'] . '://' . $params['HTTP_HOST'] . '/';
+
+        $scheme = $params['REQUEST_SCHEME'] ?? 'http';
+		return $scheme . '://' . $params['HTTP_HOST'] . '/';
 	}
 	public function getUrl(string $path): string{
 		return $this->getBaseUrl() . $path;

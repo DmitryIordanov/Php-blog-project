@@ -19,6 +19,9 @@
         "slim/slim": "4.*",
         "slim/psr7": "^1.6",
         "twig/twig": "^3.5",
-        "ext-pdo": "*"
+        "ext-pdo": "*",
+        "php-di/php-di": "^6.4",
+        "devcoder-xyz/php-dotenv": "^2.1.1",
+      "ext-http": "*"
     }
 }
