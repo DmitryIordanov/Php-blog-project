@@ -16,7 +16,7 @@ class BlogPage{
     }
     public function __invoke(ServerRequestInterface $request, ResponseInterface $response, $args = []): ResponseInterface{
         $page = isset($args['page']) ? (int) $args['page'] : 1;
-        $limit = 2;
+        $limit = 6;
 
         $posts = $this->postMapper->getList($page, $limit, 'DESC');
 
