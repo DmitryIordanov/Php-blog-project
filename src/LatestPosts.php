@@ -2,18 +2,18 @@
 
 namespace Blog;
 
-use PDO;
+use Blog\Database;
 
 class LatestPosts{
 
-	private PDO $connection;
+	private Database $database;
 
-	public function __construct(PDO $connection){
-		$this->connection = $connection;
+	public function __construct(Database $database){
+		$this->database = $database;
 	}
 
 	public function getPostNum(int $limit): ?array{
-		$statement = $this->connection->prepare('SELECT * FROM post ORDER BY published_date DESC LIMIT ' . $limit);
+		$statement = $this->database->getConnection()->prepare('SELECT * FROM post ORDER BY published_date DESC LIMIT ' . $limit);
 		$statement->execute();
 
 		return $statement->fetchAll();

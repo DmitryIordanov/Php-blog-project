@@ -3,17 +3,17 @@
 namespace Blog;
 
 use PDO;
-
+use Exception;
 class PostMapper{
 
-	private PDO $connection;
+	private Database $database;
 
-	public function __construct(PDO $connection){
-		$this->connection = $connection;
+	public function __construct(Database $database){
+		$this->database = $database;
 	}
 
 	public function getByUrlKey(string $urlKey): ?array{
-		$statement = $this->connection->prepare('SELECT * FROM post WHERE url_key = :url_key');
+		$statement = $this->getConnection()->prepare('SELECT * FROM post WHERE url_key = :url_key');
 		$statement->execute([
 			'url_key' => $urlKey
 		]);
@@ -29,16 +29,20 @@ class PostMapper{
 		}
 
 		$start = ($page - 1) * $limit;
-		$statement = $this->connection->prepare('SELECT * FROM post ORDER BY published_date ' . $direction . ' LIMIT ' . $start . ',' . $limit);
+		$statement = $this->getConnection()->prepare('SELECT * FROM post ORDER BY published_date ' . $direction . ' LIMIT ' . $start . ',' . $limit);
 		$statement->execute();
 
 		return $statement->fetchAll();
 	}
 
     public function getTotalCount(): int{
-        $statement = $this->connection->prepare('SELECT count(post_id) as total FROM post');
+        $statement = $this->getConnection()->prepare('SELECT count(post_id) as total FROM post');
         $statement->execute();
 
         return (int) ($statement->fetchColumn() ?? 0);
+    }
+
+    private function getConnection(): PDO {
+        return $this->database->getConnection();
     }
 }

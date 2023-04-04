@@ -1,6 +1,6 @@
 <?php
 
-namespace Dima\PhpBlogProject\Twig;
+namespace Blog\Twig;
 
 use Psr\Http\Message\ServerRequestInterface;
 use Twig\Extension\AbstractExtension;
@@ -14,7 +14,7 @@ class AssetExtension extends AbstractExtension{
 		$this->request = $request;
 	}
 
-	public function getFunctions(){
+	public function getFunctions(): array{
 		return [
 			new TwigFunction('asset_url', [$this, 'getAsserUrl']),
 			new TwigFunction('url', [$this, 'getUrl']),

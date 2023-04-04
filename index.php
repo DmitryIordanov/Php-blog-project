@@ -1,15 +1,13 @@
 <?php
 
-use Blog\Database;
-use Blog\LatestPosts;
+use Blog\Route\HomePage;
 use DevCoder\DotEnv;
 use DI\ContainerBuilder;
-use Psr\Http\Message\ResponseInterface as Response;
-use Psr\Http\Message\ServerRequestInterface as Request;
+use Blog\Route\AboutPage;
+use Blog\Route\BlogPage;
+use Blog\Route\PostPage;
 use Slim\Factory\AppFactory;
-use Twig\Environment;
-use Blog\PostMapper;
-use Dima\PhpBlogProject\Slim\TwigMiddleware;
+use Blog\Slim\TwigMiddleware;
 
 
 require __DIR__ . '/vendor/autoload.php';
@@ -24,63 +22,11 @@ AppFactory::setContainer($container);
 
 $app = AppFactory::create();
 
-$view = $container->get(Environment::class);
-$app->add(new TwigMiddleware($view));
+$app->add($container->get(TwigMiddleware::class));
 
-$connection = $container->get(Database::class)->getConnection();
-
-$app->get('/', function (Request $request, Response $response) use ($view, $connection) {
-    $LatestPosts = new LatestPosts($connection);
-    $posts = $LatestPosts->getPostNum(3);
-
-    $body = $view->render("index.twig", [
-        'posts' => $posts
-    ]);
-    $response->getBody()->write($body);
-    return $response;
-});
-
-$app->get('/about', function (Request $request, Response $response) use ($view) {
-    $body = $view->render("about.twig", [
-        'name' => 'Dimon'
-    ]);
-    $response->getBody()->write($body);
-    return $response;
-});
-
-$app->get('/blog[/{page}]', function (Request $request, Response $response, $args) use ($view, $connection) {
-    $PostMapper = new PostMapper($connection);
-
-    $page = isset($args['page']) ? (int) $args['page'] : 1;
-    $limit = 2;
-
-    $posts = $PostMapper->getList($page, $limit, 'DESC');
-
-    $totalCount = $PostMapper->getTotalCount();
-    $body = $view->render("blog.twig", [    
-        'posts' => $posts,
-        'pagination' => [
-            'current' => $page,
-            'paging' => ceil($totalCount / $limit),
-        ]
-    ]);
-    $response->getBody()->write($body);
-    return $response;
-});
-
-$app->get('/{url_key}', function (Request $request, Response $response, $args) use ($view, $connection) {
-    $PostMapper = new PostMapper($connection);
-    $post = $PostMapper->getByUrlKey((string) $args['url_key']);
-
-    if (empty($post)) {
-        $body = $view->render("404.twig");
-    } else {
-        $body = $view->render("post.twig", [
-            'post' => $post
-        ]);
-    }
-    $response->getBody()->write($body);
-    return $response;
-});
+$app->get('/', HomePage::class . ':execute');
+$app->get('/about', AboutPage::class);
+$app->get('/blog[/{page}]', BlogPage::class);
+$app->get('/{url_key}', PostPage::class);
 
 $app->run();

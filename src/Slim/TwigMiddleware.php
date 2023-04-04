@@ -1,8 +1,8 @@
 <?php
 
-namespace Dima\PhpBlogProject\Slim;
+namespace Blog\Slim;
 
-use Dima\PhpBlogProject\Twig\AssetExtension;
+use Blog\Twig\AssetExtension;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
