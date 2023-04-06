@@ -10,10 +10,8 @@ use Psr\Http\Server\RequestHandlerInterface;
 use Twig\Environment;
 
 class TwigMiddleware implements MiddlewareInterface{
-    private Environment $environment;
 	public function __construct(Environment $environment, AssetExtension $assetExtension){
-        $this->environment = $environment;
-        $this->environment->addExtension($assetExtension);
+        $environment->addExtension($assetExtension);
 	}
 
 	public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface{

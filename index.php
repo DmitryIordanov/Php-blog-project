@@ -7,7 +7,6 @@ use Blog\Route\AboutPage;
 use Blog\Route\BlogPage;
 use Blog\Route\PostPage;
 use Slim\Factory\AppFactory;
-use Blog\Slim\TwigMiddleware;
 
 
 require __DIR__ . '/vendor/autoload.php';
@@ -21,8 +20,6 @@ $container = $builder->build();
 AppFactory::setContainer($container);
 
 $app = AppFactory::create();
-
-$app->add($container->get(TwigMiddleware::class));
 
 $app->get('/', HomePage::class . ':execute');
 $app->get('/about', AboutPage::class);

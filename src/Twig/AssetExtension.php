@@ -2,9 +2,7 @@
 
 namespace Blog\Twig;
 
-use Psr\Http\Message\ServerRequestInterface;
 use Twig\Extension\AbstractExtension;
-use Twig\TwigFunction;
 
 class AssetExtension extends AbstractExtension{
 

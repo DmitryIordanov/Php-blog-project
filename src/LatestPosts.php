@@ -2,8 +2,6 @@
 
 namespace Blog;
 
-use Blog\Database;
-
 class LatestPosts{
 
 	private Database $database;
