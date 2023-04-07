@@ -8,13 +8,31 @@ use Blog\LatestPosts;
 use Twig\Environment;
 
 class HomePage{
+
+    /**
+     * @var LatestPosts
+     */
     private LatestPosts $latestPosts;
+
+    /**
+     * @var Environment
+     */
     private Environment $view;
+
+    /**
+     * @param LatestPosts $latestPosts
+     * @param Environment $view
+     */
     public function __construct(LatestPosts $latestPosts, Environment $view){
         $this->view = $view;
         $this->latestPosts = $latestPosts;
     }
 
+    /**
+     * @param Request $request
+     * @param Response $response
+     * @return Response
+     */
     public function execute(Request $request, Response $response): Response{
         $posts = $this->latestPosts->getPostNum(3);
 

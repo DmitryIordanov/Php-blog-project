@@ -8,7 +8,6 @@ use function DI\autowire;
 use function DI\get;
 
 return [
-
     'server.params' => $_SERVER,
 
 	FilesystemLoader::class => autowire()
